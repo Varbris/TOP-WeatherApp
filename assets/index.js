@@ -4,45 +4,37 @@ const article = document.getElementById("article");
 article.appendChild(h1);
 article.appendChild(createForm());
 
-function getData(location) {
-  const myPromise = new Promise((resolve, reject) => {
-    const source = fetch("./assets/data.json");
-    console.log("loading");
-    setTimeout(() => {
-      if (source !== "") {
-        console.log("loading complete");
-        resolve(source);
-      } else {
-        console.log("loading complete");
-        reject("error ngab");
-      }
-    }, 5000);
-  });
+function delay(milisecond) {
+  return new Promise((resolve) => setTimeout(resolve, milisecond));
+}
 
-  return myPromise;
+async function getData(location) {
+  try {
+    await delay(5000);
+    const fetchData = await fetch("./assets/data.json");
+    const responseToJson = await fetchData.json();
+    return responseToJson;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function getRequiredData(location) {
   const jsonData = getData(location);
-  return jsonData
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (value) {
-      var choosedData = {};
-      console.log(value);
-      const { address, days } = value;
-      const { datetime, description, feelslike, humidity, icon, temp } =
-        days[0];
-      choosedData = {
-        address,
-        datetime,
-        icon,
-        temp,
-        detail: { description, feelslike, humidity },
-      };
-      return choosedData;
-    });
+  return jsonData.then(function (value) {
+    var choosedData = {};
+    console.log(value);
+    const { address, days } = value;
+    const { datetime, description, feelslike, humidity, icon, temp } = days[0];
+    choosedData = {
+      address,
+      datetime,
+      icon,
+      temp,
+      detail: { description, feelslike, humidity },
+    };
+    return choosedData;
+  });
 }
 
 async function getIcon(condition) {
