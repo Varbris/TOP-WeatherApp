@@ -4,32 +4,45 @@ const article = document.getElementById("article");
 article.appendChild(h1);
 article.appendChild(createForm());
 
-async function getData(location) {
-  try {
-    const source = await fetch("./assets/data.json");
-    const jsonData = await source.json();
-    return jsonData;
-  } catch (e) {
-    console.log(e);
-  }
+function getData(location) {
+  const myPromise = new Promise((resolve, reject) => {
+    const source = fetch("./assets/data.json");
+    console.log("loading");
+    setTimeout(() => {
+      if (source !== "") {
+        console.log("loading complete");
+        resolve(source);
+      } else {
+        console.log("loading complete");
+        reject("error ngab");
+      }
+    }, 5000);
+  });
+
+  return myPromise;
 }
 
 async function getRequiredData(location) {
   const jsonData = getData(location);
-  var choosedData = {};
-  return jsonData.then(function (value) {
-    console.log(value);
-    const { address, days } = value;
-    const { datetime, description, feelslike, humidity, icon, temp } = days[0];
-    choosedData = {
-      address,
-      datetime,
-      icon,
-      temp,
-      detail: { description, feelslike, humidity },
-    };
-    return choosedData;
-  });
+  return jsonData
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (value) {
+      var choosedData = {};
+      console.log(value);
+      const { address, days } = value;
+      const { datetime, description, feelslike, humidity, icon, temp } =
+        days[0];
+      choosedData = {
+        address,
+        datetime,
+        icon,
+        temp,
+        detail: { description, feelslike, humidity },
+      };
+      return choosedData;
+    });
 }
 
 async function getIcon(condition) {
@@ -76,7 +89,7 @@ function createForm() {
     const formRegex = new RegExp(/^[A-Z][a-z]+(\s[A-Z][a-z]+)*$/, "gi");
     if (formRegex.test(dataLocation)) {
       const myWeatherData = getRequiredData(dataLocation);
-
+      console.log(myWeatherData);
       displayWeatherData(myWeatherData);
     } else {
       alert("please input some country or else");
