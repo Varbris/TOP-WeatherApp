@@ -1,0 +1,208 @@
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  /* 4. Add accessible line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+@font-face {
+  font-family: kedebideri;
+  src: url(font/Kedebideri-Lato-Winky_Rough/Kedebideri/Kedebideri-Regular.ttf);
+}
+
+body {
+  font-family: kedebideri, Arial, Helvetica, sans-serif;
+  background-color: #91c8e4;
+}
+main {
+  margin: auto;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.article {
+  text-align: center;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  align-items: center;
+}
+
+.article form {
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.article input {
+  width: 100%;
+  border: none;
+}
+input:focus {
+  outline: 4px solid #749bc2;
+  transition: 0.2s;
+  border-radius: 7px;
+}
+.article button {
+  margin: 10px;
+  padding: 5px 50px;
+}
+
+form button {
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background-color: #fffbde;
+}
+
+form button:hover {
+  background-color: #dfdccb;
+  transition: 0.2s;
+}
+
+form button:active {
+  background-color: #4682a9;
+}
+
+.weather-container {
+  overflow: auto;
+  min-width: 0;
+  max-width: 60%;
+  flex-grow: 4;
+  width: 100%;
+}
+
+.container-fadeIn-transition {
+  transition: 1s;
+}
+
+.card {
+  box-shadow: rgba(0, 0, 0, 0.5) 1.95px 1.95px 2.6px;
+  background-color: #fffbde;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.card-header {
+  background-color: rgba(189, 189, 189, 0.301);
+  min-width: 0;
+  padding: 20px;
+}
+
+.card-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 15px;
+}
+
+.detail-container table {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  max-width: 100%;
+}
+
+.detail-container th,
+td {
+  border-bottom: 2px solid #4682a9;
+}
+
+.detail-container .tr-header {
+  display: grid;
+  grid-template-rows: 3fr 1fr 1fr;
+}
+.detail-container .tr-data {
+  display: grid;
+  grid-template-rows: 3fr 0.5fr 0.5fr;
+}
+
+.forecast-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2fr 1fr;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+}
+.forecast-img {
+  max-width: 30%;
+}
+
+.credit-text {
+  font-size: 9px;
+}
