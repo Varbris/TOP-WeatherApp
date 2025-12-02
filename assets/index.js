@@ -10,12 +10,31 @@ function delay(milisecond) {
 
 async function getData(location) {
   try {
+    var isLoading = true;
+    loading(isLoading);
     await delay(5000);
     const fetchData = await fetch("./assets/data.json");
     const responseToJson = await fetchData.json();
+    isLoading = false;
+    loading(isLoading);
     return responseToJson;
   } catch (error) {
     console.log(error);
+  }
+}
+
+function loading(status) {
+  if (status === true) {
+    const modal = document.createElement("dialog");
+    modal.setAttribute("id", "loadingModal");
+    const main = document.getElementById("main");
+    main.appendChild(modal);
+    modal.innerText = "Loading...";
+    modal.showModal();
+  } else {
+    const modal = document.getElementById("loadingModal");
+    modal.close();
+    console.log("complete!");
   }
 }
 
