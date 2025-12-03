@@ -129,7 +129,6 @@ function createCard(data) {
   const forecastContainer = document.createElement("div");
   const temperatureContainer = document.createElement("div");
   const detailContainer = document.createElement("div");
-  const table = document.createElement("table");
   const gif = document.createElement("img");
   forecastContainer.classList.add("forecast-container");
   temperatureContainer.classList.add("temperature-container");
@@ -161,31 +160,30 @@ function createCard(data) {
       forecastContainer.appendChild(detailContainer);
     });
     cardHeader.innerHTML = `<h5> ${value.address} ${value.datetime}</h5>`;
-    const trowHeader = document.createElement("tr");
-    trowHeader.classList.add("tr-header");
-    const trowData = document.createElement("tr");
-    trowData.classList.add("tr-data");
+
     for (let forecastDetail in value.detail) {
-      const th = document.createElement("th");
-      th.innerText = forecastDetail;
-      trowHeader.appendChild(th);
-      const td = document.createElement("td");
+      const foreCastDataContainer = document.createElement("div");
+      foreCastDataContainer.classList.add("forecast-data-container");
+      const spanLabel = document.createElement("span");
+      spanLabel.classList.add("span-label");
+      const spanValue = document.createElement("span");
+      spanValue.classList.add("span-value");
+      console.log(forecastDetail);
       if (forecastDetail === "feelslike" || forecastDetail === "humidity") {
-        td.innerText =
+        spanLabel.innerText = forecastDetail;
+        spanValue.innerText =
           value.detail[forecastDetail] +
           "°F / " +
           fahrenheitToCelcius(value.detail[forecastDetail]) +
           "°C";
       } else {
-        td.innerText = `${value.detail[forecastDetail]}`;
+        spanLabel.innerText = forecastDetail;
+        spanValue.innerText = `${value.detail[forecastDetail]}`;
       }
-      console.log(value, forecastDetail);
-      trowData.appendChild(td);
-      table.appendChild(trowHeader);
-      table.appendChild(trowData);
+      foreCastDataContainer.appendChild(spanLabel);
+      foreCastDataContainer.appendChild(spanValue);
+      detailContainer.appendChild(foreCastDataContainer);
     }
-
-    detailContainer.appendChild(table);
   });
 
   cardBody.appendChild(gif);

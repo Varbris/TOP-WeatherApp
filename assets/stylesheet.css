@@ -178,27 +178,7 @@ form button:active {
   grid-column-start: 2;
   grid-column-end: 2;
   font-size: 0.8rem;
-}
-
-.detail-container table {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  max-width: 100%;
-}
-
-.detail-container th,
-td {
-  border-bottom: 2px solid #4682a9;
-}
-
-.detail-container .tr-header {
-  display: grid;
-  grid-template-rows: 3fr 1fr 1fr;
-}
-.detail-container .tr-data {
-  display: grid;
-  grid-template-rows: 3fr 0.5fr 0.5fr;
+  padding: 10px;
 }
 
 .forecast-img {
@@ -225,4 +205,20 @@ td {
   justify-content: center;
   align-items: center;
   padding: 10px 5px;
+}
+
+.forecast-data-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 1px solid black;
+  padding: 1px 5px;
+}
+
+.span-value {
+  text-align: end;
+}
+
+.span-label {
+  font-weight: bold;
 }
