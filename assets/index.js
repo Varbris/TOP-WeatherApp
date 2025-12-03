@@ -10,13 +10,9 @@ function delay(milisecond) {
 
 async function getData(location) {
   try {
-    var isLoading = true;
-    loading(isLoading);
-    await delay(5000);
+    await delay(2000);
     const fetchData = await fetch("./assets/data.json");
     const responseToJson = await fetchData.json();
-    isLoading = false;
-    loading(isLoading);
     return responseToJson;
   } catch (error) {
     console.log(error);
@@ -34,23 +30,41 @@ function loading(status) {
   } else {
     const modal = document.getElementById("loadingModal");
     modal.close();
-    console.log("complete!");
+    modal.remove();
+  }
+}
+
+async function getImage(location) {
+  try {
+    await delay(2000);
+    const fetchData = await fetch("./assets/img.json");
+    const responseToJson = await fetchData.json();
+    return responseToJson;
+  } catch (error) {
+    console.log(error);
   }
 }
 
 async function getRequiredData(location) {
+  var isLoading = true;
+  loading(isLoading);
   const jsonData = getData(location);
-  return jsonData.then(function (value) {
+  return jsonData.then(async function (value) {
+    const img = await getImage(location);
+    isLoading = false;
+    loading(isLoading);
+
     var choosedData = {};
-    console.log(value);
     const { address, days } = value;
     const { datetime, description, feelslike, humidity, icon, temp } = days[0];
+    const imgObj = img.data[0].images.downsized;
     choosedData = {
       address,
       datetime,
       icon,
       temp,
       detail: { description, feelslike, humidity },
+      imgObj,
     };
     return choosedData;
   });
@@ -100,7 +114,6 @@ function createForm() {
     const formRegex = new RegExp(/^[A-Z][a-z]+(\s[A-Z][a-z]+)*$/, "gi");
     if (formRegex.test(dataLocation)) {
       const myWeatherData = getRequiredData(dataLocation);
-      console.log(myWeatherData);
       displayWeatherData(myWeatherData);
     } else {
       alert("please input some country or else");
@@ -114,9 +127,12 @@ function createCard(data) {
   const cardHeader = document.createElement("div");
   const cardBody = document.createElement("div");
   const forecastContainer = document.createElement("div");
+  const temperatureContainer = document.createElement("div");
   const detailContainer = document.createElement("div");
   const table = document.createElement("table");
+  const gif = document.createElement("img");
   forecastContainer.classList.add("forecast-container");
+  temperatureContainer.classList.add("temperature-container");
   detailContainer.classList.add("detail-container");
   cardHeader.classList.add("card-header");
   cardBody.classList.add("card-body");
@@ -135,9 +151,14 @@ function createCard(data) {
         value.temp + "°F / " + fahrenheitToCelcius(value.temp) + "°C";
       img.classList.add("forecast-img");
       img.src = requestImg.url;
-      forecastContainer.appendChild(img);
-      forecastContainer.appendChild(h2);
-      forecastContainer.appendChild(text);
+      gif.src = value.imgObj.url;
+      gif.classList.add("gif");
+
+      temperatureContainer.appendChild(img);
+      temperatureContainer.appendChild(h2);
+      temperatureContainer.appendChild(text);
+      forecastContainer.appendChild(temperatureContainer);
+      forecastContainer.appendChild(detailContainer);
     });
     cardHeader.innerHTML = `<h5> ${value.address} ${value.datetime}</h5>`;
     const trowHeader = document.createElement("tr");
@@ -154,10 +175,12 @@ function createCard(data) {
       table.appendChild(trowHeader);
       table.appendChild(trowData);
     }
+
     detailContainer.appendChild(table);
   });
+
+  cardBody.appendChild(gif);
   cardBody.appendChild(forecastContainer);
-  cardBody.appendChild(detailContainer);
   cardContainer.append(cardHeader);
   cardContainer.append(cardBody);
   return cardContainer;

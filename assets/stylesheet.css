@@ -167,7 +167,17 @@ form button:active {
 .card-body {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 15px;
+}
+
+.card-body img {
+  grid-column-start: 1;
+  grid-row-end: 2;
+}
+
+.detail-container {
+  grid-column-start: 2;
+  grid-column-end: 2;
+  font-size: 0.8rem;
 }
 
 .detail-container table {
@@ -191,14 +201,6 @@ td {
   grid-template-rows: 3fr 0.5fr 0.5fr;
 }
 
-.forecast-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 2fr 1fr;
-  align-items: center;
-  justify-content: center;
-  justify-items: center;
-}
 .forecast-img {
   max-width: 30%;
 }
@@ -215,4 +217,12 @@ td {
   background-color: #d6e9f3;
   padding: 5vh 6vw;
   margin: 40vh auto;
+}
+
+.temperature-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 5px;
 }
