@@ -10,8 +10,9 @@ function delay(milisecond) {
 
 async function getData(location) {
   try {
-    await delay(2000);
-    const fetchData = await fetch("./assets/data.json");
+    const fetchData = await fetch(
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=5QDRU5ATTJMAAV2ZPZ4BD7XDW`
+    );
     const responseToJson = await fetchData.json();
     return responseToJson;
   } catch (error) {
@@ -36,8 +37,9 @@ function loading(status) {
 
 async function getImage(location) {
   try {
-    await delay(2000);
-    const fetchData = await fetch("./assets/img.json");
+    const fetchData = await fetch(
+      `https://api.giphy.com/v1/gifs/search?q=${location}&api_key=7Zr3PdXnRFSocIChtavK5gwSy0uEkrj7`
+    );
     const responseToJson = await fetchData.json();
     return responseToJson;
   } catch (error) {
