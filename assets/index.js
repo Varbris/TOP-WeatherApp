@@ -170,7 +170,16 @@ function createCard(data) {
       th.innerText = forecastDetail;
       trowHeader.appendChild(th);
       const td = document.createElement("td");
-      td.innerText = `${value.detail[forecastDetail]}`;
+      if (forecastDetail === "feelslike" || forecastDetail === "humidity") {
+        td.innerText =
+          value.detail[forecastDetail] +
+          "°F / " +
+          fahrenheitToCelcius(value.detail[forecastDetail]) +
+          "°C";
+      } else {
+        td.innerText = `${value.detail[forecastDetail]}`;
+      }
+      console.log(value, forecastDetail);
       trowData.appendChild(td);
       table.appendChild(trowHeader);
       table.appendChild(trowData);
